@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}{{ group.description }}{% endblock %}
+{% block content %}
+<!-- класс py-5 создает отступы сверху и снизу блока -->
+  <div class="container py-5">
+    <h1> Записи сообщества: {{  group  }}</h1>
+    <p> {{ group.description }} </p>
+    <article>
+      {% for post in page_obj %}
+        {% include 'posts/includes/post.html' %}
+        <br> 
+      {% if post.group %}
+        <a href="{% url 'posts:allrecord' post.group.slug %}">все записи группы</a>
+      {% endif %}
+      {% if not forloop.last %}<hr>{% endif %}
+       {% endfor %}
+    </article>
+      <!-- под последним постом нет линии -->
+  </div>
+{% include 'posts/includes/paginator.html' %} 
+{% endblock %}
