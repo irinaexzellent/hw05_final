@@ -87,7 +87,9 @@ class PostsURLTests(TestCase):
 
     def test_authorized_user(self):
         """Страница доступна для авторизированного пользователя."""
-        url_names = [reverse('posts:post_create')]
+        url_names = [
+            reverse('posts:post_create'),
+            ]
         for address in url_names:
             with self.subTest(address=address):
                 response = self.authorized_user.get(address)
@@ -110,14 +112,13 @@ class PostsURLTests(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
 
     def test_add_comment_sub_unsub_authorized_user(self):
-        """Страница доступна для авторизированного пользователя."""
+        """Страницы перенаправляют пользователей."""
         url_names = [
             reverse('posts:add_comment', kwargs={'post_id': '1'}),
             reverse('posts:profile_follow',
                     kwargs={'username': 'user_author'}),
             reverse('posts:profile_unfollow',
-                    kwargs={'username': 'user_author'})
-        ]
+                    kwargs={'username': 'user_author'})]
         for address in url_names:
             with self.subTest(address=address):
                 response = self.authorized_user.get(address)

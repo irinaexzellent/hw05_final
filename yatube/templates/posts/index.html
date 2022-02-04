@@ -13,8 +13,7 @@
       {% endif %}
       {% if not forloop.last %}<hr>{% endif %}
     {% endfor %}
-    {
   </div>
-  {% include 'posts/includes/paginator.html' %}
   {% endcache %}
+{% include 'posts/includes/paginator.html' %}
 {% endblock %}

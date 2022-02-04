@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
@@ -108,7 +108,7 @@ def post_create(request):
     """ View-функция создает пост и возвращает страницу профайла пользоваетеля.
 
     Ключевые аргументы:
-    form -- объект класса PostForm
+    form -- объект класса PostForm,
     """
     form = PostForm(
         request.POST or None,
@@ -173,8 +173,19 @@ def add_comment(request, post_id):
 
 @login_required
 def follow_index(request):
-    # информация о текущем пользователе доступна в переменной request.user
-    # ...
+    """View-функция возвращает страницу
+    с избранными авторами.
+
+    Ключевые аргументы:
+    user -- текущий пользователь,
+    authors -- список объектов класса User,
+    на которых подписан текущий пользователь
+    posts_list -- объекты модели Post, отфильтрованные по
+    авторам, на которых подписан текущий пользователь
+    paginator -- количество записей на странице,
+    page_number -- номер запрошенной страницы,
+    page_obj -- набор записей для страницы с запрошенным номером
+    """
     user = request.user
     authors = user.follower.values_list('author', flat=True)
     posts_list = Post.objects.filter(author__id__in=authors)
@@ -184,22 +195,38 @@ def follow_index(request):
     context = {
         'page_obj': page_obj,
     }
+    print(authors)
     return render(request, 'posts/follow.html', context)
 
 
 @login_required
 def profile_follow(request, username):
-    # Подписаться на автора
+    """ View-функция создает подписку на автора
+    (если текущий пользователь не является автором профиля)
+    и возвращает страницу профиля автора.
+
+    Ключевые аргументы:
+    author -- объект класса User, username=username
+    user -- текущий пользователь
+    """
     author = User.objects.get(username=username)
     user = request.user
     if author != user:
         Follow.objects.get_or_create(user=user, author=author)
         return redirect('posts:profile', username=username)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponse(request)
 
 
 @login_required
 def profile_unfollow(request, username):
+    """ View-функция отменяет подписку на автора
+    и перенаправляет на страницу
+    'profile/<str:username>/unfollow/'.
+
+    Ключевые аргументы:
+    user -- текущий пользователь;
+    """
+
     user = request.user
     Follow.objects.get(user=user, author__username=username).delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

@@ -72,7 +72,13 @@ class Comment(CreatedModel):
 
 
 class Follow(models.Model):
-    """Модель для хранения подписчиков."""
+    """Модель для хранения связей между авторами и
+    подписчиками
+
+    Ключевые аргументы:
+    user -- ссылка на объект пользователя, который подписывается,
+    author -- ссылка на объект пользователя, на которого подписываются
+    """
     user = models.ForeignKey(
         User,
         related_name='follower',
@@ -84,3 +90,4 @@ class Follow(models.Model):
 
     def __str__(self):
         return f"Подписчик: '{self.user}', автор: '{self.author}'"
+
