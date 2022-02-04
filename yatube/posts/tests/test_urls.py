@@ -87,9 +87,7 @@ class PostsURLTests(TestCase):
 
     def test_authorized_user(self):
         """Страница доступна для авторизированного пользователя."""
-        url_names = [
-            reverse('posts:post_create'),
-            ]
+        url_names = [reverse('posts:post_create')]
         for address in url_names:
             with self.subTest(address=address):
                 response = self.authorized_user.get(address)
