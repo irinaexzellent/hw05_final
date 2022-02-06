@@ -63,7 +63,7 @@ class Comment(CreatedModel):
         verbose_name='Автор комментария')
     post = models.ForeignKey(
         Post,
-        models.SET_NULL,
+        on_delete=models.CASCADE,
         blank=True,
         null=True,
         related_name='comments',

@@ -195,7 +195,6 @@ def follow_index(request):
     context = {
         'page_obj': page_obj,
     }
-    print(authors)
     return render(request, 'posts/follow.html', context)
 
 

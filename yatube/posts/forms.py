@@ -21,6 +21,9 @@ class PostForm(forms.ModelForm):
                                        queryset=group_list,
                                        empty_label='---------',
                                        )
+        image = forms.ImageField(
+            label='Картинка поста',
+        )
 
 
 class CommentForm(forms.ModelForm):
