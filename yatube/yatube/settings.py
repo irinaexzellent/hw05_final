@@ -30,6 +30,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '[::1]',
     'testserver',
+    'www.irinaexcellent.pythonanywhere.com',
+    'irinaexcellent.pythonanywhere.com',
 ]
 
 LOGIN_URL = 'users:login'
@@ -55,9 +57,11 @@ INSTALLED_APPS = [
     'about.apps.AboutConfig',
     'core.apps.CoreConfig',
     'sorl.thumbnail',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -66,6 +70,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+] 
 
 ROOT_URLCONF = 'yatube.urls'
 
