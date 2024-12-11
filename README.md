@@ -1,12 +1,12 @@
-# О ПРОЕКТЕ
+# ABOUT THE PROJECT
 
-Сайт с возможностью публикации и просмотра постов пользователей.
+A site with the ability to publish and view user posts.
 
-# ИСПОЛЬЗУЕМЫЕ ТЕХНОЛОГИИ
+# TECHNOLOGIES USED
 
 Python, Django, HTML, CSS
 
-# Как запустить проект:
+# How to start a project:
 
 Clone the repository and go to it in the command line:
 
@@ -32,12 +32,12 @@ python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 ```
-cd aging_metal
+cd yatube
 ```
 ```
 python manage.py runserver
 ```
-Проект доступен: http://127.0.0.1:8000/
+The project is available: http://127.0.0.1:8000/
 
 # Author
 
